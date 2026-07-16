@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本東北自駕行程 2026/7/31–8/8</title>
+<style>
+  :root{
+    --ink:#2b2620;
+    --sub:#6b6257;
+    --paper:#faf6ef;
+    --card:#ffffff;
+    --line:#e7ddc9;
+    --accent:#a8433a;
+    --accent-soft:#f3e2df;
+    --good:#3f7d5c;
+    --good-soft:#e3ede7;
+    --warn:#b8792b;
+    --warn-soft:#f7ead2;
+    --gold:#c8a24a;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:"Noto Serif TC","Hiragino Mincho ProN","Yu Mincho",serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.7;
+    padding-bottom:80px;
+  }
+  .hero{
+    background:
+      radial-gradient(circle at 15% 20%, rgba(200,162,74,0.18), transparent 40%),
+      radial-gradient(circle at 85% 0%, rgba(168,67,58,0.15), transparent 45%),
+      linear-gradient(180deg, #2b2620 0%, #3a3226 100%);
+    color:#f6efe2;
+    padding:56px 20px 44px;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:radial-gradient(circle, rgba(246,239,226,0.06) 1px, transparent 1px);
+    background-size:14px 14px;
+    opacity:0.5;
+  }
+  .hero-inner{position:relative; z-index:1;}
+  .hero .kicker{
+    letter-spacing:0.35em; font-size:12px; color:var(--gold); text-transform:uppercase;
+  }
+  .hero h1{
+    font-size:clamp(26px,4.2vw,40px);
+    margin:14px 0 6px;
+    font-weight:700;
+  }
+  .hero .dates{ font-size:16px; color:#e4d6bd; }
+  .hero .tagline{
+    margin-top:18px; font-size:14px; color:#cfc3ad; letter-spacing:0.05em;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:0 20px;}
+
+  .anniversary-banner{
+    max-width:960px; margin:-26px auto 0; padding:0 20px;
+    position:relative; z-index:2;
+  }
+  .anniversary-banner .box{
+    background:linear-gradient(135deg,#fdf7ee,#f7e9e2);
+    border:1px solid var(--gold);
+    border-radius:14px;
+    padding:16px 22px;
+    text-align:center;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+    font-size:14px;
+    color:#6b4a2a;
+  }
+
+  nav.dayjump{
+    max-width:960px; margin:32px auto 0; padding:0 20px;
+    display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
+  }
+  nav.dayjump a{
+    text-decoration:none; font-size:12.5px; color:var(--ink);
+    background:var(--card); border:1px solid var(--line);
+    padding:7px 12px; border-radius:999px;
+    transition:all .15s ease;
+    white-space:nowrap;
+  }
+  nav.dayjump a:hover{ background:var(--accent); color:#fff; border-color:var(--accent); }
+
+  section{ max-width:960px; margin:40px auto 0; padding:0 20px; }
+  h2.section-title{
+    font-size:22px; margin:0 0 18px; padding-bottom:10px;
+    border-bottom:2px solid var(--ink);
+    display:flex; align-items:center; gap:10px;
+  }
+  h2.section-title .num{
+    font-size:12px; color:#fff; background:var(--accent);
+    padding:3px 9px; border-radius:999px; letter-spacing:0.08em;
+  }
+
+  table.overview{ width:100%; border-collapse:collapse; background:var(--card); border-radius:12px; overflow:hidden; box-shadow:0 2px 10px rgba(0,0,0,0.04); }
+  table.overview th, table.overview td{ padding:12px 14px; text-align:left; border-bottom:1px solid var(--line); font-size:14px; }
+  table.overview th{ background:var(--ink); color:#f3ead9; font-weight:500; letter-spacing:0.03em; }
+  table.overview tr:last-child td{ border-bottom:none; }
+  table.overview td.date{ font-weight:700; white-space:nowrap; color:var(--accent); }
+
+  .confirm-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px; }
+  .confirm-card{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:16px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.03);
+  }
+  .confirm-card h3{ margin:0 0 8px; font-size:15px; display:flex; align-items:center; gap:6px; }
+  .confirm-card p{ margin:4px 0; font-size:13.5px; color:var(--sub); }
+  .confirm-card p b{ color:var(--ink); }
+  .tag{ display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; margin-left:4px; }
+  .tag.ok{ background:var(--good-soft); color:var(--good); }
+  .tag.wait{ background:var(--warn-soft); color:var(--warn); }
+
+  .day-card{
+    background:var(--card); border:1px solid var(--line); border-radius:16px;
+    padding:24px 26px; margin-bottom:22px; box-shadow:0 3px 14px rgba(0,0,0,0.05);
+    scroll-margin-top:20px;
+  }
+  .day-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px; }
+  .day-head .d{ font-size:22px; font-weight:700; color:var(--accent); }
+  .day-head .route{ font-size:16px; font-weight:600; }
+  .day-meta{ font-size:12.5px; color:var(--sub); background:var(--paper); border:1px dashed var(--line); border-radius:8px; padding:8px 12px; margin:10px 0 16px; }
+  .day-note{ font-size:13px; color:var(--warn); background:var(--warn-soft); border-radius:8px; padding:8px 12px; margin:0 0 14px; }
+
+  .block{ margin-top:16px; }
+  .block h4{ font-size:14px; margin:0 0 8px; color:var(--ink); display:flex; align-items:center; gap:6px; }
+  .block h4::before{ content:""; width:6px; height:6px; background:var(--gold); border-radius:50%; display:inline-block; }
+  .block ul{ margin:0; padding-left:18px; font-size:13.8px; color:#3f3a32; }
+  .block ul li{ margin-bottom:5px; }
+  .block ul li b{ color:var(--ink); }
+  .block a{ color:var(--accent); }
+
+  .stay-box{
+    background:var(--good-soft); border:1px solid #cfe0d5; border-radius:12px;
+    padding:14px 16px; margin-top:10px;
+  }
+  .stay-box .title{ font-weight:700; color:var(--good); font-size:14.5px; margin-bottom:6px; }
+  .stay-box .row{ font-size:13px; color:#3c4f43; margin:3px 0; }
+  .stay-box .row b{ color:#213e2c; }
+  .stay-box .warn{ color:var(--warn); font-weight:600; }
+
+  .anni-box{
+    background:linear-gradient(135deg,#fdf1ee,#fbe6e3); border:1px solid #f0c9c3;
+    border-radius:12px; padding:14px 16px; margin-top:10px;
+  }
+  .anni-box .title{ font-weight:700; color:var(--accent); font-size:14.5px; margin-bottom:6px;}
+  .anni-box .row{ font-size:13px; color:#5c3a35; margin:3px 0; }
+
+  .todo-list{ list-style:none; margin:0; padding:0; display:grid; gap:8px; }
+  .todo-list li{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:10px 14px; font-size:13.8px; display:flex; gap:10px; align-items:flex-start;
+  }
+  .todo-list li.done{ color:var(--sub); }
+  .todo-list li .check{ flex:0 0 auto; font-size:15px; }
+  .todo-list li.done .check{ color:var(--good); }
+  .todo-list li:not(.done) .check{ color:var(--warn); }
+
+  table.budget{ width:100%; border-collapse:collapse; background:var(--card); border-radius:12px; overflow:hidden; font-size:13.8px; box-shadow:0 2px 10px rgba(0,0,0,0.04); margin-bottom:16px;}
+  table.budget th, table.budget td{ padding:10px 14px; border-bottom:1px solid var(--line); text-align:left; }
+  table.budget th{ background:var(--ink); color:#f3ead9; font-weight:500; }
+  table.budget td:last-child{ text-align:right; font-variant-numeric:tabular-nums; }
+  table.budget tr:last-child td{ border-bottom:none; }
+  .budget-total{
+    background:linear-gradient(135deg,#2b2620,#3a3226); color:#f6efe2;
+    border-radius:12px; padding:18px 22px; text-align:center; margin-bottom:16px;
+  }
+  .budget-total .amt{ font-size:30px; font-weight:700; color:var(--gold); }
+  .budget-total .note{ font-size:12px; color:#cfc3ad; margin-top:4px; }
+  .budget-pending{ font-size:13px; color:var(--sub); background:var(--card); border:1px dashed var(--line); border-radius:10px; padding:12px 16px; }
+
+  footer{ max-width:960px; margin:50px auto 0; padding:20px; text-align:center; font-size:12px; color:var(--sub); }
+
+  @media (max-width:600px){
+    .day-card{ padding:18px 16px; }
+    table.overview th, table.overview td{ font-size:12.5px; padding:9px 10px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="kicker">Tohoku Road Trip · 結婚十週年紀念</div>
+    <h1>日本東北自駕行程</h1>
+    <div class="dates">2026年7月31日 — 8月8日</div>
+    <div class="tagline">村上・長岡花火・米澤・豬苗代・磐梯・日光・東京</div>
+  </div>
+</div>
+
+<div class="anniversary-banner">
+  <div class="box">🎉 8/5 結婚十週年紀念 — 磐梯山溫泉飯店已安排蛋糕與花束驚喜</div>
+</div>
+
+<nav class="dayjump">
+  <a href="#overview">總覽</a>
+  <a href="#confirmed">已確認事項</a>
+  <a href="#d4">8/4 米澤</a>
+  <a href="#d5">8/5 磐梯</a>
+  <a href="#d6">8/6 日光</a>
+  <a href="#d7">8/7 日光→上野</a>
+  <a href="#d8">8/8 返程</a>
+  <a href="#todo">待辦</a>
+  <a href="#budget">花費</a>
+</nav>
+
+<section id="overview">
+  <h2 class="section-title"><span class="num">01</span>行程總覽</h2>
+  <table class="overview">
+    <tr><th>日期</th><th>地點</th><th>主要行程</th></tr>
+    <tr><td class="date">7/31 (五)</td><td>東京(高田馬場)</td><td>桃園→成田抵達,入住</td></tr>
+    <tr><td class="date">8/1 (六)</td><td>東京多摩 → 新潟村上</td><td>三麗鷗樂園、取車、前往村上</td></tr>
+    <tr><td class="date">8/2 (日)</td><td>新潟村上 / 長岡</td><td>長岡花火大會</td></tr>
+    <tr><td class="date">8/3 (一)</td><td>新潟村上 / 長岡</td><td>長岡花火大會</td></tr>
+    <tr><td class="date">8/4 (二)</td><td>村上 → 米澤</td><td>沿113號公路自駕、小國町</td></tr>
+    <tr><td class="date">8/5 (三)</td><td>米澤 → 豬苗代 → 磐梯町</td><td>天鏡閣、野口英世記念館,磐梯山溫泉飯店過夜(10週年驚喜)</td></tr>
+    <tr><td class="date">8/6 (四)</td><td>磐梯町 → 郡山、宇都宮(路過) → 日光</td><td>移動日,日光過夜</td></tr>
+    <tr><td class="date">8/7 (五)</td><td>日光 → 東京多摩 → 上野</td><td>世界遺產、瀑布,還車後入住上野</td></tr>
+    <tr><td class="date">8/8 (六)</td><td>上野 → 成田</td><td>自由活動、スカイライナー、成田返程</td></tr>
+  </table>
+</section>
+
+<section id="confirmed">
+  <h2 class="section-title"><span class="num">02</span>已確認事項</h2>
+  <div class="confirm-grid">
+
+    <div class="confirm-card">
+      <h3>✈️ 機票 <span class="tag ok">已確認</span></h3>
+      <p><b>星宇航空</b> 訂位代號 <b>D6Y7C9</b></p>
+      <p>去程 JX804:7/31 15:00 桃園→19:25 成田T2</p>
+      <p>回程 JX805:8/8 20:40 成田T2→23:20 桃園</p>
+      <p>乘客:HSIEH MINGCHIH、TINGYU CHANG</p>
+    </div>
+
+    <div class="confirm-card">
+      <h3>🏨 7/31 高田馬場 <span class="tag ok">已確認</span></h3>
+      <p><b>Vessel Inn Takadanobaba Station</b></p>
+      <p>Agoda訂單:1735482326</p>
+      <p>TWD 4,545(已付款)</p>
+    </div>
+
+    <div class="confirm-card">
+      <h3>🏨 8/1〜8/4 瀬波溫泉 <span class="tag wait">回覆待確認</span></h3>
+      <p><b>瀬波ビューホテル</b>(新潟県村上市)</p>
+      <p>TEL 0254-53-3211 / 確認號:202605280000068</p>
+      <p>2名,含晚餐,¥139,700(現場付款)</p>
+      <p>⚠️ 已詢問8/1晚到(23點後)可否入住+晚餐配合,回覆待確認</p>
+    </div>
+
+    <div class="confirm-card">
+      <h3>🚗 租車 <span class="tag ok">已確認</span></h3>
+      <p><b>樂天旅遊 × Nippon Rent-A-Car</b></p>
+      <p>預訂號:RC22461199815031876</p>
+      <p>取車:8/1 16:00 多摩中心站 / 還車:8/7 20:00</p>
+      <p>¥44,110(現場付款)</p>
+    </div>
+
+    <div class="confirm-card">
+      <h3>🎀 三麗鷗樂園 <span class="tag ok">已確認</span></h3>
+      <p>8/1(六) 一日護照,2人份</p>
+      <p>樂天體驗訂單:1292078 / ¥7,400已付款</p>
+      <p>來場予約番号:06080106443133</p>
+    </div>
+
+    <div class="confirm-card">
+      <h3>🎆 長岡花火大會 <span class="tag wait">處理中</span></h3>
+      <p>8/2、8/3,官方抽選<b>已落選</b></p>
+      <p>目前透過官方公式リセール(チケプラトレード)申購中</p>
+      <p>備案:悠久山公園(免費穴場)</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- 8/4 -->
+<section>
+  <h2 class="section-title" id="d4"><span class="num">8/4</span>村上 → 米澤(山形)</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">火曜日</span><span class="route">村上 → 小國町 → 米澤</span></div>
+    <div class="day-meta">車程約2〜2.5h・經國道113號山路(不走高速)・10:00 瀬波ビューホテル退房</div>
+    <div class="block">
+      <h4>沿途</h4>
+      <ul><li>國道113號經小國町、<b>赤芝峡</b>(磐梯朝日國家公園溪谷,步道來回約30分)</li></ul>
+    </div>
+    <div class="block">
+      <h4>文化景點(米澤市區,合計約2h)</h4>
+      <ul>
+        <li><b>上杉神社/松が岬公園</b>——米沢市丸の内1,境內免費,寶物殿「稽照殿」約400円,停留40〜60分</li>
+        <li><b>米沢市上杉博物館(伝国の杜)</b>——緊鄰上杉神社,9:00〜17:00,一般410円,停留60〜90分</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h4>晚餐(米澤牛)</h4>
+      <ul>
+        <li>牛鍋おおき——米沢駅前3-2-18,¥5,000〜10,000/人,建議預約 0238-40-1129</li>
+        <li>金剛閣——米沢市桜木町3-41,¥6,000〜15,000/人,預約 0238-22-4122</li>
+        <li>吉亭——郊區古民家風,¥8,000〜15,000/人,務必預約</li>
+      </ul>
+    </div>
+    <div class="stay-box">
+      <div class="title">✅ 住宿已確認 — ホテルスロービレッジ米沢</div>
+      <div class="row"><b>地址</b>:〒992-0044 米沢市春日 1-chōme-7-52,BLUE BASE 2F</div>
+      <div class="row"><b>Agoda訂單</b>:1748425004</div>
+      <div class="row"><b>入住</b>8/4 15:00後 → <b>退房</b>8/5 10:00前・Moderate King Room・2位大人</div>
+      <div class="row"><b>金額</b>:NT$3,477.46(已付款)</div>
+      <div class="row">聯絡:+81-80-3545-5544</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8/5 -->
+<section>
+  <h2 class="section-title" id="d5"><span class="num">8/5</span>米澤 → 豬苗代 → 磐梯町</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">水曜日</span><span class="route">米澤 → 豬苗代 → 磐梯町</span></div>
+    <div class="day-meta">米澤→豬苗代約1h17m(東北中央道→東北道→磐越道)・豬苗代→磐梯町約20〜30分</div>
+    <div class="day-note">⚠️ 一般道經國道121號大峠道路較短但常因坍方/大雨封閉,出發前務必查<a href="https://www.pref.fukushima.lg.jp/sec/41353a/ootouge-kisei.html" target="_blank">福島県道路規制公告</a>,不通則走高速</div>
+    <div class="block">
+      <h4>豬苗代半天行程(自然+文化+美食,彼此車程10〜15分內)</h4>
+      <ul>
+        <li><b>天鏡閣</b>——舊皇族避暑別邸,5〜10月8:30〜17:00,¥370,眺望猪苗代湖,停留1〜1.5h</li>
+        <li><b>野口英世記念館</b>——日本細菌學家出生故居,2022年新增感染症博物館,停留1〜1.5h(TEL 0242-65-2319)</li>
+        <li><b>猪苗代湖畔(長浜/志田浜)</b>——夏季可搭遊覽船、水浴、散步</li>
+        <li><b>午餐:猪苗代地ビール館</b>——福島首間地啤酒觀光設施,搭配德式香腸</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h4>備案(時間允許)</h4>
+      <ul><li>磐梯山ゴールドライン+五色沼——單程30〜50分,健行約1h</li></ul>
+    </div>
+    <div class="stay-box">
+      <div class="title">✅ 住宿已確認 — 磐梯山温泉ホテル by 星野リゾート</div>
+      <div class="row"><b>地址</b>:〒969-3302 福島県耶麻郡磐梯町大字更科字清水平6838-68</div>
+      <div class="row"><b>預訂號</b>:1695v54h9x / 密碼 b87a58</div>
+      <div class="row"><b>入住</b>8/5 15:00後 → <b>退房</b>8/6 11:00前・Modern Twin Room(含早晚餐)</div>
+      <div class="row"><b>金額</b>:JPY 30,600(已付款)</div>
+      <div class="row warn">⚠️ 不可取消或更改,無法退款</div>
+      <div class="row">電話:+81-50-3786-1144</div>
+    </div>
+    <div class="anni-box">
+      <div class="title">🎉 結婚10週年紀念驚喜安排</div>
+      <div class="row">🎂 蛋糕(予約ID 6759489)——8/5晚餐甜點時,生デコ4号,蠟燭1根,訊息牌「10周年おめでとう」,¥3,300</div>
+      <div class="row">💐 花束(予約ID 6759505)——8/6退房前10:00頃送到房間,水色・ベージュ・ピンク柔和可愛風,¥3,000</div>
+      <div class="row">合計¥6,300・⚠️取消需2日前17:00前致電050-3134-8094或email onsenhotel@alts.co.jp</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8/6 -->
+<section>
+  <h2 class="section-title" id="d6"><span class="num">8/6</span>磐梯町 → 郡山・宇都宮(路過) → 日光</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">木曜日</span><span class="route">磐梯町 → 郡山(路過) → 宇都宮(路過午餐) → 日光</span></div>
+    <div class="day-meta">磐梯町→郡山IC約25〜30分・郡山→宇都宮約66分〜1h17m・宇都宮→日光約35〜45分・全程約2〜2.5h</div>
+    <div class="day-note">⚠️ 改為8/6直接住日光,不留宿宇都宮——把「宇都宮→日光」提前開完,8/7早上不用開車,一早可直接走去東照宮避開團客潮</div>
+    <div class="block">
+      <h4>郡山路過順遊(擇一,不下交流道久留)</h4>
+      <ul>
+        <li>開成山公園——開成1-5,免費停車場24小時開放</li>
+        <li>大友パン店(虎丸町24-9)——在地名物「クリームボックス」約¥150</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h4>宇都宮路過午餐(擇一,不留到晚上)</h4>
+      <ul>
+        <li>来らっせ本店——馬場通り2-3-12,集結5家名店餃子</li>
+        <li>みんみん本店——馬場通り4-2-3,附免費停車場</li>
+        <li>大谷資料館(時間允許可順路一看)——大谷町909,地下採石場遺跡,免費停車</li>
+      </ul>
+    </div>
+    <div class="stay-box">
+      <div class="title">✅ 住宿已確認 — Fairfield by Marriott Tochigi Nikko</div>
+      <div class="row"><b>地址</b>:栃木県日光市所野1541-3(近東武/JR日光駅,免費自有停車場含充電樁)</div>
+      <div class="row"><b>Agoda訂單</b>:1748458577</div>
+      <div class="row"><b>入住</b>8/6 → <b>退房</b>8/7・Standard Guest room 1 King</div>
+      <div class="row"><b>金額</b>:USD 127.08(TWD 4,093)</div>
+    </div>
+    <div class="block">
+      <h4>晚餐(日光市區)</h4>
+      <ul><li>湯波(日光名物豆皮)料理店或市區內食堂,依入住地點決定</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 8/7 -->
+<section>
+  <h2 class="section-title" id="d7"><span class="num">8/7</span>日光(世界遺產+瀑布) → 東京多摩 → 上野</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">金曜日</span><span class="route">日光 → 東京多摩(還車) → 上野</span></div>
+    <div class="day-meta">日光→多摩中心約2.5〜3h(東北道→圏央道→中央道方向避開都心)</div>
+    <div class="day-note">已入住日光,一早不用開車,可直接走去東照宮,建議8:30〜9:00前抵達避開團客潮與停車場客滿</div>
+    <div class="block">
+      <h4>世界遺產(半天,合計約3〜4h)</h4>
+      <ul>
+        <li><b>日光東照宮</b>——日光市山内2301,夏季9:00〜17:00,¥1,600,停留1.5〜2h</li>
+        <li><b>輪王寺</b>——緊鄰東照宮,套票¥900,停留1〜1.5h</li>
+        <li><b>二荒山神社</b>——境內免費,神苑¥300,停留30〜45分</li>
+        <li>停車:東照宮大駐車場(¥600/日)</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h4>時間更寬裕,建議安排</h4>
+      <ul><li>いろは坂→中禅寺湖→華厳の滝——市區開車30〜40分,電梯票¥600(早上不用通勤開車,這段比原規劃更從容)</li></ul>
+    </div>
+    <div class="block">
+      <h4>下午</h4>
+      <ul><li>中午過後出發,經東北道→圏央道→中央道往多摩市,傍晚前抵達多摩中心站還車,晚上搭電車前往上野</li></ul>
+    </div>
+    <div class="stay-box">
+      <div class="title">✅ 住宿已確認 — Hotel RESOL Ueno</div>
+      <div class="row"><b>地址</b>:7-2-9 Ueno, Taito-ku, Tokyo 110-0005(上野駅徒步約1分)</div>
+      <div class="row"><b>Agoda訂單</b>:1748476397</div>
+      <div class="row"><b>入住</b>8/7 → <b>退房</b>8/8・標準小型雙人房(禁菸)</div>
+      <div class="row"><b>金額</b>:NT$3,818(已付款)</div>
+      <div class="row warn">⚠️ 不可退款</div>
+      <div class="row">電話:+81-3-3844-9269</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8/8 -->
+<section>
+  <h2 class="section-title" id="d8"><span class="num">8/8</span>上野自由活動 → 成田返程</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">土曜日</span><span class="route">上野 → 成田機場</span></div>
+    <div class="block">
+      <ul>
+        <li>白天自由活動(上野公園、阿美橫丁等)</li>
+        <li>京成上野駅搭乘スカイライナー約40分鐘直達成田機場</li>
+        <li>晚班機 JX805・20:40 成田起飛 → 23:20 桃園</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="todo">
+  <h2 class="section-title"><span class="num">03</span>待辦事項</h2>
+  <ul class="todo-list">
+    <li><span class="check">◯</span>瀬波ビューホテル 晚到/晚餐 回覆確認</li>
+    <li><span class="check">◯</span>長岡花火 リセール購票 結果確認</li>
+    <li class="done"><span class="check">✓</span>8/4 米澤住宿(ホテルスロービレッジ米沢,Agoda訂單1748425004)已訂</li>
+    <li class="done"><span class="check">✓</span>8/5 磐梯町住宿(磐梯山温泉ホテル,訂單1695v54h9x)已訂,含早晚餐,不可取消</li>
+    <li class="done"><span class="check">✓</span>8/6 日光住宿(Fairfield by Marriott,Agoda訂單1748458577)已訂</li>
+    <li><span class="check">◯</span>米澤牛晚餐、天鏡閣/野口英世記念館開放時間等是否需要事先預約/確認</li>
+    <li class="done"><span class="check">✓</span>8/7 日光行程時間偏緊問題已透過改宿日光解決</li>
+    <li class="done"><span class="check">✓</span>8/7〜8/8 上野住宿(Hotel RESOL Ueno,Agoda訂單1748476397)已訂,不可退款</li>
+    <li class="done"><span class="check">✓</span>全部住宿(7/31〜8/8)已訂房完成 🎉</li>
+    <li><span class="check">◯</span>出發前用 ATIS/NAVITIME 再次確認大峠道路(若走一般道)、圏央道、磐越自動車道路況</li>
+  </ul>
+</section>
+
+<section id="budget">
+  <h2 class="section-title"><span class="num">04</span>花費統整</h2>
+  <div class="budget-total">
+    <div class="amt">約 TWD 95,165</div>
+    <div class="note">2人合計・統計於2026/7/16・日圓以當日匯率約1円=0.198台幣估算</div>
+  </div>
+  <table class="budget">
+    <tr><th colspan="2">已付款項目</th></tr>
+    <tr><td>機票(星宇航空來回,2人)</td><td>TWD 34,030</td></tr>
+    <tr><td>7/31 高田馬場 Vessel Inn</td><td>TWD 4,545</td></tr>
+    <tr><td>三麗鷗樂園門票(2人)</td><td>¥7,400(約TWD 1,466)</td></tr>
+    <tr><td>8/4 米澤スロービレッジ</td><td>TWD 3,477</td></tr>
+    <tr><td>8/5 磐梯山溫泉飯店</td><td>¥30,600(約TWD 6,064)</td></tr>
+    <tr><td>10週年蛋糕+花束加購</td><td>¥6,300(約TWD 1,248)</td></tr>
+    <tr><td>8/6 日光 Fairfield</td><td>TWD 4,093</td></tr>
+    <tr><td>8/7 上野 RESOL</td><td>TWD 3,818</td></tr>
+  </table>
+  <table class="budget">
+    <tr><th colspan="2">現場付款(金額已確定,尚未實際扣款)</th></tr>
+    <tr><td>8/1〜8/4 瀬波ビューホテル(3晚)</td><td>¥139,700(約TWD 27,682)</td></tr>
+    <tr><td>租車</td><td>¥44,110(約TWD 8,741)</td></tr>
+  </table>
+  <div class="budget-pending">
+    <b>尚未計入:</b>長岡花火リセール購票(處理中,金額未知)、日本當地零散花費(米澤牛晚餐、天鏡閣/野口英世記念館門票、東照宮/輪王寺/二荒山神社門票、宇都宮餃子、日常餐飲交通等)
+  </div>
+</section>
+
+<footer>日本東北自駕行程 2026/7/31–8/8 · 為 HSIEH MINGCHIH & TINGYU CHANG 結婚十週年紀念旅行整理</footer>
+
+</body>
+</html>
