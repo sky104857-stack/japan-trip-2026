@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>日本東北自駕行程 2026/7/31–8/8</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root{
     --ink:#2b2620;
@@ -18,23 +21,36 @@
     --warn:#b8792b;
     --warn-soft:#f7ead2;
     --gold:#c8a24a;
+    --sakura:#eeb3c3;
+    --sakura-deep:#d98099;
+    --indigo:#2f3d56;
+    --indigo-soft:#e6e9f0;
+    --font-display:"Shippori Mincho","Noto Serif TC","Hiragino Mincho ProN","Yu Mincho",serif;
+    --font-body:"Noto Serif TC","Hiragino Mincho ProN","Yu Mincho",serif;
+    --font-label:"Zen Kaku Gothic New","Hiragino Sans",sans-serif;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    font-family:"Noto Serif TC","Hiragino Mincho ProN","Yu Mincho",serif;
+    font-family:var(--font-body);
     background:var(--paper);
     color:var(--ink);
     line-height:1.7;
     padding-bottom:80px;
+    position:relative;
   }
+  #sakura-canvas{
+    position:fixed; inset:0; width:100%; height:100%;
+    z-index:0; pointer-events:none;
+  }
+  .hero, nav.dayjump, section, footer{ position:relative; z-index:1; }
   .hero{
     background:
-      radial-gradient(circle at 15% 20%, rgba(200,162,74,0.18), transparent 40%),
-      radial-gradient(circle at 85% 0%, rgba(168,67,58,0.15), transparent 45%),
-      linear-gradient(180deg, #2b2620 0%, #3a3226 100%);
+      radial-gradient(circle at 12% 15%, rgba(238,179,195,0.16), transparent 42%),
+      radial-gradient(circle at 88% 0%, rgba(200,162,74,0.14), transparent 45%),
+      linear-gradient(180deg, #201c2e 0%, #2f2a3d 55%, #3a3226 100%);
     color:#f6efe2;
-    padding:56px 20px 44px;
+    padding:64px 20px 52px;
     text-align:center;
     position:relative;
     overflow:hidden;
@@ -46,16 +62,23 @@
     background-size:14px 14px;
     opacity:0.5;
   }
-  .hero-inner{position:relative; z-index:1;}
+  .hero .branch{
+    position:absolute; top:-18px; right:-10px; width:190px; height:190px;
+    opacity:0.85; z-index:1; pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:2;}
   .hero .kicker{
+    font-family:var(--font-label);
     letter-spacing:0.35em; font-size:12px; color:var(--gold); text-transform:uppercase;
   }
   .hero h1{
-    font-size:clamp(26px,4.2vw,40px);
-    margin:14px 0 6px;
+    font-family:var(--font-display);
+    font-size:clamp(28px,4.4vw,42px);
+    margin:16px 0 8px;
     font-weight:700;
+    letter-spacing:0.04em;
   }
-  .hero .dates{ font-size:16px; color:#e4d6bd; }
+  .hero .dates{ font-family:var(--font-label); font-size:16px; color:#e9c9d2; letter-spacing:0.03em; }
   .hero .tagline{
     margin-top:18px; font-size:14px; color:#cfc3ad; letter-spacing:0.05em;
   }
@@ -66,6 +89,7 @@
     display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
   }
   nav.dayjump a{
+    font-family:var(--font-label);
     text-decoration:none; font-size:12.5px; color:var(--ink);
     background:var(--card); border:1px solid var(--line);
     padding:7px 12px; border-radius:999px;
@@ -76,11 +100,16 @@
 
   section{ max-width:960px; margin:40px auto 0; padding:0 20px; }
   h2.section-title{
+    font-family:var(--font-display);
     font-size:22px; margin:0 0 18px; padding-bottom:10px;
     border-bottom:2px solid var(--ink);
     display:flex; align-items:center; gap:10px;
   }
+  h2.section-title::after{
+    content:"🌸"; font-size:13px; margin-left:auto; opacity:0.7;
+  }
   h2.section-title .num{
+    font-family:var(--font-label);
     font-size:12px; color:#fff; background:var(--accent);
     padding:3px 9px; border-radius:999px; letter-spacing:0.08em;
   }
@@ -96,10 +125,10 @@
     background:var(--card); border:1px solid var(--line); border-radius:12px;
     padding:16px 18px; box-shadow:0 2px 8px rgba(0,0,0,0.03);
   }
-  .confirm-card h3{ margin:0 0 8px; font-size:15px; display:flex; align-items:center; gap:6px; }
+  .confirm-card h3{ font-family:var(--font-display); margin:0 0 8px; font-size:15px; display:flex; align-items:center; gap:6px; }
   .confirm-card p{ margin:4px 0; font-size:13.5px; color:var(--sub); }
   .confirm-card p b{ color:var(--ink); }
-  .tag{ display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; margin-left:4px; }
+  .tag{ font-family:var(--font-label); display:inline-block; font-size:11px; padding:2px 8px; border-radius:999px; margin-left:4px; }
   .tag.ok{ background:var(--good-soft); color:var(--good); }
   .tag.wait{ background:var(--warn-soft); color:var(--warn); }
 
@@ -107,11 +136,12 @@
     background:var(--card); border:1px solid var(--line); border-radius:16px;
     padding:24px 26px; margin-bottom:22px; box-shadow:0 3px 14px rgba(0,0,0,0.05);
     scroll-margin-top:20px;
+    border-left:3px solid var(--sakura);
   }
   .day-head{ display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:6px; }
-  .day-head .d{ font-size:22px; font-weight:700; color:var(--accent); }
-  .day-head .route{ font-size:16px; font-weight:600; }
-  .day-meta{ font-size:12.5px; color:var(--sub); background:var(--paper); border:1px dashed var(--line); border-radius:8px; padding:8px 12px; margin:10px 0 16px; }
+  .day-head .d{ font-family:var(--font-label); font-size:20px; font-weight:500; color:var(--indigo); }
+  .day-head .route{ font-family:var(--font-display); font-size:17px; font-weight:700; }
+  .day-meta{ font-family:var(--font-label); font-size:12.5px; color:var(--sub); background:var(--paper); border:1px dashed var(--line); border-radius:8px; padding:8px 12px; margin:10px 0 16px; }
   .day-note{ font-size:13px; color:var(--warn); background:var(--warn-soft); border-radius:8px; padding:8px 12px; margin:0 0 14px; }
 
   .block{ margin-top:16px; }
@@ -129,7 +159,7 @@
     background:var(--good-soft); border:1px solid #cfe0d5; border-radius:12px;
     padding:14px 16px; margin-top:10px;
   }
-  .stay-box .title{ font-weight:700; color:var(--good); font-size:14.5px; margin-bottom:6px; }
+  .stay-box .title{ font-family:var(--font-display); font-weight:700; color:var(--good); font-size:14.5px; margin-bottom:6px; }
   .stay-box .row{ font-size:13px; color:#3c4f43; margin:3px 0; }
   .stay-box .row b{ color:#213e2c; }
   .stay-box .warn{ color:var(--warn); font-weight:600; }
@@ -157,7 +187,18 @@
   .budget-total .note{ font-size:12px; color:#cfc3ad; margin-top:4px; }
   .budget-pending{ font-size:13px; color:var(--sub); background:var(--card); border:1px dashed var(--line); border-radius:10px; padding:12px 16px; }
 
-  footer{ max-width:960px; margin:50px auto 0; padding:20px; text-align:center; font-size:12px; color:var(--sub); }
+  footer{
+    max-width:960px; margin:64px auto 0; padding:28px 20px 20px; text-align:center;
+    font-family:var(--font-label); font-size:12px; color:var(--sub);
+    border-top:1px solid var(--line);
+    background-image:
+      linear-gradient(135deg, var(--line) 1px, transparent 1px),
+      linear-gradient(45deg, var(--line) 1px, transparent 1px);
+    background-size:22px 22px;
+    background-position:0 0, 11px 11px;
+    background-color:transparent;
+  }
+  footer .seal{ font-size:18px; display:block; margin-bottom:8px; opacity:0.8; }
 
   @media (max-width:600px){
     .day-card{ padding:18px 16px; }
@@ -167,7 +208,21 @@
 </head>
 <body>
 
+<canvas id="sakura-canvas" aria-hidden="true"></canvas>
+
 <div class="hero">
+  <svg class="branch" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M195 5C160 20 130 45 110 80C95 105 90 130 95 160" stroke="#c8a24a" stroke-width="1.5" stroke-linecap="round" opacity="0.55"/>
+    <path d="M150 25C140 40 132 55 128 70" stroke="#c8a24a" stroke-width="1.2" stroke-linecap="round" opacity="0.45"/>
+    <g fill="#eeb3c3" opacity="0.85">
+      <circle cx="118" cy="60" r="5"/>
+      <circle cx="132" cy="48" r="4.5"/>
+      <circle cx="98" cy="95" r="5.5"/>
+      <circle cx="145" cy="30" r="4"/>
+      <circle cx="80" cy="130" r="4.5"/>
+      <circle cx="108" cy="115" r="4"/>
+    </g>
+  </svg>
   <div class="hero-inner">
     <div class="kicker">Tohoku Road Trip</div>
     <h1>日本東北自駕行程</h1>
@@ -179,6 +234,10 @@
 <nav class="dayjump">
   <a href="#overview">總覽</a>
   <a href="#confirmed">已確認事項</a>
+  <a href="#d0">7/31 抵達</a>
+  <a href="#d1">8/1 三麗鷗→村上</a>
+  <a href="#d2">8/2 長岡花火①</a>
+  <a href="#d3">8/3 長岡花火②</a>
   <a href="#d4">8/4 米澤</a>
   <a href="#d5">8/5 磐梯</a>
   <a href="#d6">8/6 日光</a>
@@ -254,6 +313,112 @@
       <p>8/2 官方抽選仍<b>已落選</b>,備案:悠久山公園<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=%E6%82%A0%E4%B9%85%E5%B1%B1%E5%85%AC%E5%9C%92%20%E9%95%B7%E5%B2%A1%E5%B8%82" target="_blank" rel="noopener">📍</a>(免費穴場)</p>
     </div>
 
+  </div>
+</section>
+
+<!-- 7/31 -->
+<section>
+  <h2 class="section-title" id="d0"><span class="num">7/31</span>桃園 → 成田 → 高田馬場</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">金曜日</span><span class="route">成田T2 → 高田馬場</span></div>
+    <div class="day-meta">星宇JX804・15:00桃園起飛→19:25成田T2抵達(依入境+提領行李預留約1小時)</div>
+    <div class="block">
+      <h4>機場→市區交通</h4>
+      <ul>
+        <li>成田T2「空港第2ビル駅」搭京成<b>スカイライナー</b>經日暮里/上野轉山手線至高田馬場,最快約1小時31分(含轉乘),車資約¥2,985(IC優先)</li>
+        <li>若入境較晚或行李多,也可選JR成田特快(N'EX)或利木津巴士,依實際抵達時間現場判斷</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h4>抵達當晚</h4>
+      <ul>
+        <li>高田馬場周邊超商多,可先採買隔天早餐/零食,因8/1一早就要出發去三麗鷗樂園</li>
+        <li>當晚只安排入住休息,不排額外行程</li>
+      </ul>
+    </div>
+    <div class="stay-box">
+      <div class="title">✅ 住宿已確認 — Vessel Inn Takadanobaba Station<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Vessel%20Inn%20Takadanobaba%20Station" target="_blank" rel="noopener">📍</a></div>
+      <div class="row"><b>Agoda訂單</b>:1735482326</div>
+      <div class="row"><b>金額</b>:TWD 4,545(已付款)</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8/1 -->
+<section>
+  <h2 class="section-title" id="d1"><span class="num">8/1</span>高田馬場 → 三麗鷗樂園 → 取車 → 新潟村上</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">土曜日</span><span class="route">高田馬場 → 多摩センター(樂園、取車) → 新潟村上</span></div>
+    <div class="day-meta">三麗鷗樂園一日護照2人份(來場予約番号:06080106443133)・16:00多摩センター駅取車(Nippon Rent-A-Car)・當晚入住瀬波ビューホテル</div>
+    <div class="day-note">⚠️ 多摩センター→村上車程約4.5〜5小時(依路況),16:00取車後立即出發,預估最快21:30〜22:00才能抵達瀬波,已提前告知飯店晚到(23點後)入住+晚餐配合,回覆待確認</div>
+    <div class="block">
+      <h4>上午〜下午:三麗鷗樂園</h4>
+      <ul><li>サンリオピューロランド<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%83%B3%E3%83%AA%E3%82%AA%E3%83%94%E3%83%A5%E3%83%BC%E3%83%AD%E3%83%A9%E3%83%B3%E3%83%89" target="_blank" rel="noopener">📍</a>,一日護照可自由進出室內設施,建議開園前抵達避開人潮,中午於園內用餐</li></ul>
+    </div>
+    <div class="block">
+      <h4>取車</h4>
+      <ul><li>Nippon Rent-A-Car 多摩センター店<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=Nippon%20Rent-A-Car%20%E5%A4%9A%E6%91%A9%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC%E9%A7%85" target="_blank" rel="noopener">📍</a>,16:00取車,現場確認保險與ETC卡/導航設定,預訂號RC22461199815031876</li></ul>
+    </div>
+    <div class="block">
+      <h4>晚間長途自駕</h4>
+      <ul><li>路線:圏央道→関越自動車道→日本海東北自動車道→村上瀬波温泉IC,途中建議於SA/PA休息用餐,避免疲勞駕駛,務必確認留意夜間山區路段</li></ul>
+    </div>
+    <div class="stay-box">
+      <div class="title">⏳ 住宿回覆待確認 — 瀬波ビューホテル<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=%E7%80%AC%E6%B3%A2%E3%83%93%E3%83%A5%E3%83%BC%E3%83%9B%E3%83%86%E3%83%AB%20%E6%96%B0%E6%BD%9F%E7%9C%8C%E6%9D%91%E4%B8%8A%E5%B8%82" target="_blank" rel="noopener">📍</a></div>
+      <div class="row">TEL 0254-53-3211 / 確認號:202605280000068</div>
+      <div class="row">2名,含晚餐,¥139,700(現場付款)</div>
+    </div>
+  </div>
+</section>
+
+<!-- 8/2 -->
+<section>
+  <h2 class="section-title" id="d2"><span class="num">8/2</span>村上休息日 / 長岡花火大會(第一天,無座位)</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">日曜日</span><span class="route">村上 ⇄ 長岡(視體力決定)</span></div>
+    <div class="day-meta">官方抽選已落選,無正式座位;長岡花火19:20〜21:10施放(依當年公告微調)</div>
+    <div class="day-note">⚠️ 8/1深夜才抵達瀬波,建議上午充分休息;悠久山公園臨時停車場離發射點有距離,只能從展望台遠眺市區夜景+遠方花火光,無法近距離看到花火本體,想近距離觀賞需搭乘臨時接駁巴士到長岡駅東口再步行約30分,請視體力決定是否前往</div>
+    <div class="block">
+      <h4>白天(擇一,輕鬆為主)</h4>
+      <ul>
+        <li>村上城跡——高台眺望村上市街,免費,健行約40分</li>
+        <li>イヨボヤ会館(鮭魚博物館)——村上鮭魚文化展示</li>
+        <li>村上町屋巡り——舊街屋、鮭魚料理老店散策</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h4>若前往長岡(遠觀)</h4>
+      <ul><li>悠久山公園<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=%E6%82%A0%E4%B9%85%E5%B1%B1%E5%85%AC%E5%9C%92%20%E9%95%B7%E5%B2%A1%E5%B8%82" target="_blank" rel="noopener">📍</a>——臨時停車場約760台,展望台可遠眺花火光,或轉搭接駁巴士到長岡駅東口(徒步約30分到會場周邊)</li></ul>
+    </div>
+    <div class="block">
+      <h4>備案</h4>
+      <ul><li>若覺得舟車勞頓,可留在村上市區/瀬波溫泉悠閒休息,8/3已有正式座位可完整體驗花火</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- 8/3 -->
+<section>
+  <h2 class="section-title" id="d3"><span class="num">8/3</span>長岡花火大會(已確認座位)</h2>
+  <div class="day-card">
+    <div class="day-head"><span class="d">月曜日</span><span class="route">村上 → 長岡(B會場) → 村上</span></div>
+    <div class="day-meta">長岡まつり大花火大会・B會場【20】陸上競技場イス席×2・受付番号17890478・施放時間約19:20〜21:10(依當年公告)</div>
+    <div class="day-note">⚠️ 從関越自動車道長岡IC到B會場約4km/15分(平常時),活動當天人車眾多,請大幅預留交通與停車時間,建議下午即出發</div>
+    <div class="block">
+      <h4>交通與入場</h4>
+      <ul>
+        <li>從村上自駕經日本海東北道→関越道長岡IC,建議下午提早出發預留塞車時間</li>
+        <li>會場周邊停車位有限,建議事先查詢付費停車場或Park&amp;Ride接駁資訊</li>
+      </ul>
+    </div>
+    <div class="block">
+      <h4>觀賞</h4>
+      <ul><li>B會場陸上競技場<a class="maplink" href="https://www.google.com/maps/search/?api=1&query=%E9%95%B7%E5%B2%A1%E5%B8%82%E5%96%B6%E9%99%B8%E4%B8%8A%E7%AB%B6%E6%8A%80%E5%A0%B4" target="_blank" rel="noopener">📍</a>為長岡花火兩大會場之一,以復興祈願花火「フェニックス」大範圍展開為特色,適合想感受整片天空煙火的座位</li></ul>
+    </div>
+    <div class="block">
+      <h4>返程</h4>
+      <ul><li>結束後人潮眾多,建議預留較長時間等待疏散,並確認回程路線與休息點</li></ul>
+    </div>
   </div>
 </section>
 
@@ -455,7 +620,78 @@
   </div>
 </section>
 
-<footer>日本東北自駕行程 2026/7/31–8/8 · 為 HSIEH MINGCHIH & TINGYU CHANG 結婚十週年紀念旅行整理</footer>
+<footer><span class="seal">🌸</span>日本東北自駕行程 2026/7/31–8/8 · 為 HSIEH MINGCHIH & TINGYU CHANG 結婚十週年紀念旅行整理</footer>
 
+<script>
+(function(){
+  var canvas = document.getElementById('sakura-canvas');
+  var ctx = canvas.getContext('2d');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W, H;
+  function resize(){
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = document.documentElement.scrollHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function drawPetal(p){
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rot);
+    ctx.globalAlpha = p.opacity;
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.moveTo(0, -p.size);
+    ctx.bezierCurveTo(p.size * 0.8, -p.size * 0.6, p.size * 0.8, p.size * 0.6, 0, p.size);
+    ctx.bezierCurveTo(-p.size * 0.8, p.size * 0.6, -p.size * 0.8, -p.size * 0.6, 0, -p.size);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  var colors = ['#f4c4d2', '#eeb3c3', '#f8d9e2', '#e28fa3'];
+  function makePetal(randomY){
+    return {
+      x: Math.random() * W,
+      y: randomY ? Math.random() * H : -20,
+      size: 6 + Math.random() * 7,
+      speedY: 0.5 + Math.random() * 1.1,
+      speedX: 0.3 + Math.random() * 0.6,
+      sway: Math.random() * Math.PI * 2,
+      swaySpeed: 0.008 + Math.random() * 0.015,
+      rot: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.02,
+      opacity: 0.55 + Math.random() * 0.35,
+      color: colors[Math.floor(Math.random() * colors.length)]
+    };
+  }
+
+  var count = window.innerWidth < 600 ? 18 : 32;
+  var petals = [];
+  for (var i = 0; i < count; i++) petals.push(makePetal(true));
+
+  if (reduceMotion) {
+    ctx.clearRect(0, 0, W, H);
+    petals.forEach(drawPetal);
+    return;
+  }
+
+  function tick(){
+    ctx.clearRect(0, 0, W, H);
+    petals.forEach(function(p){
+      p.sway += p.swaySpeed;
+      p.x += p.speedX + Math.sin(p.sway) * 0.6;
+      p.y += p.speedY;
+      p.rot += p.rotSpeed;
+      if (p.y > H + 20 || p.x > W + 20 || p.x < -20) {
+        Object.assign(p, makePetal(false));
+      }
+      drawPetal(p);
+    });
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+})();
+</script>
 </body>
 </html>
